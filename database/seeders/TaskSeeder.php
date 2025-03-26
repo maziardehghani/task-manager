@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Statuses;
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TaskSeeder extends Seeder
@@ -14,15 +14,17 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        User::all()->each(function ($user) {
+        $sequenceData = [];
+
+        foreach (Statuses::taskStatuses() as $status) {
+            $sequenceData[] = ['status' => $status];
+        }
+
+        User::all()->each(function ($user) use ($sequenceData) {
             $user->tasks()->saveMany(
                 Task::factory()
                     ->count(15)
-                    ->sequence(
-                        ['status' => 'todo'],
-                        ['status' => 'doing'],
-                        ['status' => 'done'],
-                    )
+                    ->sequence(...$sequenceData)
                     ->for($user)
                     ->create()
             );

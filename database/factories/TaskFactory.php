@@ -19,7 +19,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->paragraph,
             'status' => $this->faker->randomElement(Statuses::taskStatuses()),
             'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'end_date' => $this->faker->dateTimeBetween('now', '+1 month'),
+            'end_date' => null,
         ];
     }
 
@@ -46,17 +46,24 @@ class TaskFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'status' => Statuses::DONE,
-                'end_date' => now(),
+                'end_date' => $this->faker->dateTimeBetween(
+                    $attributes['start_date'],
+                    '+1 month'
+                ),
             ];
         });
     }
 
-    public function forUser(User $user)
+
+    public function configure()
     {
-        return $this->state(function (array $attributes) use ($user) {
-            return [
-                'user_id' => $user->id,
-            ];
+        return $this->afterCreating(function (Task $task) {
+            if ($task->status === 'done' && is_null($task->end_date)) {
+                $task->update([
+                    'end_date' => now()
+                ]);
+            }
         });
     }
+
 }
