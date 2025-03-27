@@ -3,7 +3,6 @@
 namespace App\Repositories\Task;
 use App\Interfaces\Repository;
 use App\Models\Task;
-use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository extends Repository {
 
@@ -18,7 +17,7 @@ class TaskRepository extends Repository {
               ->search($searchParams)
               ->whereUser($user)
               ->latest()
-              ->paginate();
+              ->get();
       }
 
 }

@@ -24,6 +24,11 @@ class Task extends Model
     ];
 
     protected $perPage = 10;
+
+    protected $with = [
+        'user'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
