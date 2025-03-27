@@ -1,17 +1,28 @@
 <?php
 
-namespace Feature;
+namespace Tests\Feature;
 
+use App\Traits\TestTools;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
+
+    use RefreshDatabase, TestTools;
+
+    public function setUp(): void
+    {
+        Parent::setUp();
+
+        $this->seed();
+    }
     /**
      * A basic feature test example.
      */
-    public function test_each_user_can_see_his_tasks(): void
+    public function test_user_can_get_tasks(): void
     {
-        $response = $this->get('/tasks');
+        $response = $this->getData('/api/tasks');
 
         $response->assertStatus(200);
     }
