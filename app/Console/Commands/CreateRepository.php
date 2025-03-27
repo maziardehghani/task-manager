@@ -51,7 +51,6 @@ class CreateRepository extends Command
             $content = "<?php
 
 namespace App\Repositories\\{$this->argument('name')};
-use App\Repositories\Repository;
 
 class {$className} extends Repository {
 
