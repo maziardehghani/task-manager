@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('tasks')->group(function () {
 
     Route::get('/', [TaskController::class, 'index'])
-    ->middleware(['auth:api'])
+    ->middleware(['auth:sanctum'])
     ->name('tasks.index');
 
 
