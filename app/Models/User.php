@@ -59,4 +59,23 @@ class User extends Authenticatable
     }
 
 
+    public function signIn(): string
+    {
+        $this->tokens()->delete();
+
+        return $this->createToken(
+            name: 'task-manager-api',
+            expiresAt: now()->addDay()
+        )->plainTextToken;
+    }
+
+
+    public function signUp(): string
+    {
+        return $this->createToken(
+            name: 'task-manager-api',
+            expiresAt: now()->addDay()
+        )->plainTextToken;
+    }
+
 }

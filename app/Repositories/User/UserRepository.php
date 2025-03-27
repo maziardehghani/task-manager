@@ -14,7 +14,7 @@ class UserRepository extends Repository {
 
       public function findByEmail(string $email): ?User
       {
-          return $this->model->whereEmail($email)->first();
+          return $this->model->whereEmail($email)->firstOrFail();
       }
 
 }
