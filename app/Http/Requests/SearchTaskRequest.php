@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Statuses;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SearchTaskRequest extends FormRequest
 {
@@ -23,7 +25,7 @@ class SearchTaskRequest extends FormRequest
     {
         return [
             'text' => 'nullable|string',
-            'status' => 'nullable|string',
+            'status' => ['nullable', 'string', Rule::in(Statuses::taskStatuses())],
         ];
     }
 }
