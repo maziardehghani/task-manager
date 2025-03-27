@@ -25,4 +25,13 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    /// Scopes
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    public function scopeWhereUser($query, User $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
+
 }
