@@ -78,4 +78,10 @@ class User extends Authenticatable
         )->plainTextToken;
     }
 
+
+    public function logout(): void
+    {
+        $this->tokens()->delete();
+    }
+
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -36,6 +37,14 @@ class AuthController extends Controller
             'token' => $user->signUp(),
             'user' => $user,
         ], 'User registered successfully');
+    }
+
+
+    public function logout():JsonResponse
+    {
+        auth()->user()->logout();
+
+        return response()->success(null, 'Successfully logged out');
     }
 
 

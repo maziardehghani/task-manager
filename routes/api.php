@@ -53,9 +53,15 @@ Route::prefix('auth')->group(function () {
         ->name('login');
 
 
-
     Route::post('register', [AuthController::class, 'register'])
         ->middleware('throttle:5,1')
-        ->name('register');;
+        ->name('register');
+
+
+    Route::post('logout', [AuthController::class, 'logout'])
+        ->middleware(['throttle:5,1', 'auth:sanctum'])
+        ->name('logout');
+
+
 
 });
