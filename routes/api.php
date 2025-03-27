@@ -33,4 +33,10 @@ Route::prefix('tasks')->group(function () {
         ->name('tasks.update');
 
 
+    Route::put('/changeStatus/{task}', [TaskController::class, 'changeStatus'])
+        ->middleware(['auth:sanctum'])
+        ->can('access-task', 'task')
+        ->name('tasks.changeStatus');
+
+
 });
