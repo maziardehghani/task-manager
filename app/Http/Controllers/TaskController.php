@@ -37,4 +37,10 @@ class TaskController extends Controller
         return response()->success($task, 'Task updated successfully');
     }
 
+
+    public function show(Task $task): JsonResponse
+    {
+        return response()->success(new TaskResources($task), 'Task retrieved successfully');
+    }
+
 }
