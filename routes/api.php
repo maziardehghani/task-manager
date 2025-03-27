@@ -21,6 +21,12 @@ Route::prefix('tasks')->group(function () {
         ->name('tasks.store');
 
 
+    Route::put('/update/{task}', [TaskController::class, 'update'])
+        ->middleware(['auth:sanctum'])
+        ->name('tasks.update');
+
+
+
 });
 
 

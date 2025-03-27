@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SearchTaskRequest;
 use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResources;
+use App\Models\Task;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,6 +29,13 @@ class TaskController extends Controller
         $task = $this->taskRepository->store($request->validated());
 
         return response()->success($task, 'Task created successfully');
+    }
+
+    public function update(TaskRequest $request, Task $task): JsonResponse
+    {
+        $this->taskRepository->update($task, $request->validated());
+
+        return response()->success($task, 'Task updated successfully');
     }
 
 }

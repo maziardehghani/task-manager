@@ -19,6 +19,12 @@ class TaskObserver
     /**
      * Handle the Task "updated" event.
      */
+    public function updating(Task $task): void
+    {
+
+    }
+
+
     public function updated(Task $task): void
     {
 
