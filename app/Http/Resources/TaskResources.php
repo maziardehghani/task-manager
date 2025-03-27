@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\CalendarServices\CalendarService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,9 +21,9 @@ class TaskResources extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'created_at' => $this->created_at,
+            'start_date' =>  CalendarService::getPersianDate($this->start_date),
+            'end_date' => CalendarService::getPersianDate($this->created_at),
+            'created_at' => CalendarService::getPersianDate($this->created_at),
         ];
     }
 }

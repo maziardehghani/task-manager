@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchTaskRequest;
 use App\Http\Resources\TaskResources;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -13,9 +15,9 @@ class TaskController extends Controller
         public TaskRepository $taskRepository,
     ){}
 
-    public function index(): JsonResponse
+    public function index(SearchTaskRequest $request): JsonResponse
     {
-        $tasks = $this->taskRepository->getTasksOfUser(auth()->user());
+        $tasks = $this->taskRepository->getTasksOfUser(auth()->user(), $request->validated());
 
         return response()->success(TaskResources::collection($tasks), 'tasks list received successfully');
     }

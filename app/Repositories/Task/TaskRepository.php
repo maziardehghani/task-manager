@@ -12,9 +12,10 @@ class TaskRepository extends Repository {
           $this->model = Task::query();
       }
 
-      public function getTasksOfUser($user)
+      public function getTasksOfUser($user, $searchParams)
       {
           return $this->model
+              ->search($searchParams)
               ->whereUser($user)
               ->latest()
               ->paginate();
