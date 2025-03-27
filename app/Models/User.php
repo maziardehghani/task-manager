@@ -52,4 +52,10 @@ class User extends Authenticatable
     }
 
 
+    public function scopeWhereEmail($query, string $email)
+    {
+        return $query->where('email', $email);
+    }
+
+
 }
