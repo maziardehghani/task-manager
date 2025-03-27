@@ -3,7 +3,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
-use App\Http\Middleware\TaskOwnershipCheck;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('tasks')->group(function () {
 
     Route::get('/', [TaskController::class, 'index'])
-    ->middleware(['auth:sanctum'])
-    ->name('tasks.index');
+        ->middleware(['auth:sanctum'])
+        ->name('tasks.index');
 
 
     Route::get('/{task}', [TaskController::class, 'show'])
@@ -32,36 +31,6 @@ Route::prefix('tasks')->group(function () {
         ->middleware(['auth:sanctum'])
         ->can('access-task', 'task')
         ->name('tasks.update');
-
-
-
-});
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Auth
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Route::prefix('auth')->group(function () {
-
-
-    Route::post('login', [AuthController::class, 'login'])
-        ->middleware('throttle:5,1')
-        ->name('login');
-
-
-    Route::post('register', [AuthController::class, 'register'])
-        ->middleware('throttle:5,1')
-        ->name('register');
-
-
-    Route::post('logout', [AuthController::class, 'logout'])
-        ->middleware(['throttle:5,1', 'auth:sanctum'])
-        ->name('logout');
-
 
 
 });
