@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory,Searchable;
 
 
     protected $fillable = [
@@ -35,21 +36,6 @@ class Task extends Model
     {
         return $query->where('user_id', $user->id);
     }
-
-    protected function scopeSearch($query, array $params): void
-    {
-        foreach ($params as $key => $value) {
-            $query->filter($key, $value);
-        }
-    }
-
-    public function scopeFilter($query, $methodName, $arguments)
-    {
-        if (method_exists($this, "filterBy$methodName")) {
-            return call_user_func_array([$this, "filterBy$methodName"], [$query, $arguments]);
-        }
-    }
-
 
     /////////////////////////////////////////////////////////////////////////////////////
     /// Filters
