@@ -17,13 +17,13 @@ class TaskResources extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
+            'userName' => $this->userName,
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'start_date' =>  CalendarService::getPersianDate($this->start_date),
-            'end_date' => CalendarService::getPersianDate($this->created_at),
-            'created_at' => CalendarService::getPersianDate($this->created_at),
+            'startDate' =>  CalendarService::getPersianDate($this->start_date),
+            'endDate' => CalendarService::getPersianDate($this->created_at),
+            'createdAt' => CalendarService::getPersianDate($this->created_at),
         ];
     }
 }
