@@ -16,6 +16,11 @@ Route::prefix('tasks')->group(function () {
     ->name('tasks.index');
 
 
+    Route::post('/store', [TaskController::class, 'store'])
+        ->middleware(['auth:sanctum'])
+        ->name('tasks.store');
+
+
 });
 
 

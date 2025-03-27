@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Statuses;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TaskRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class TaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,11 @@ class TaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:2000'],
+            'status' => ['required', 'string', Rule::in(Statuses::taskStatuses())],
+            'start_date' => ['required', 'date', 'after_or_equal:today'],
+            'end_date' => ['required', 'date', 'after:start_date'],
         ];
     }
 }
