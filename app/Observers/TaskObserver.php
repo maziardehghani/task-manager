@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Factories\StatusHandlerFactory;
 use App\Models\Task;
 
 class TaskObserver
@@ -27,7 +28,10 @@ class TaskObserver
 
     public function updated(Task $task): void
     {
-
+        if ($task->wasChanged('status')) {
+            $handler = StatusHandlerFactory::make($task->status);
+            $handler->handle($task);
+        }
     }
 
     /**
