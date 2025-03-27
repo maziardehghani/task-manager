@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
+use App\Http\Middleware\TaskOwnershipCheck;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,6 +24,7 @@ Route::prefix('tasks')->group(function () {
 
     Route::put('/update/{task}', [TaskController::class, 'update'])
         ->middleware(['auth:sanctum'])
+        ->can('access-task', 'task')
         ->name('tasks.update');
 
 

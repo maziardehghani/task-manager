@@ -8,7 +8,6 @@ use App\Http\Resources\TaskResources;
 use App\Models\Task;
 use App\Repositories\Task\TaskRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
