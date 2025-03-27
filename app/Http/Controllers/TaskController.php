@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TaskResources;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\Task\TaskRepository;
@@ -17,6 +18,6 @@ class TaskController extends Controller
     {
         $tasks = $this->taskRepository->getTasksOfUser(auth()->user());
 
-        return response()->success($tasks, 'tasks list received successfully');
+        return response()->success(TaskResources::collection($tasks), 'tasks list received successfully');
     }
 }

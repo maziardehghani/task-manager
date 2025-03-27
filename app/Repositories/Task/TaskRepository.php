@@ -12,7 +12,7 @@ class TaskRepository extends Repository {
           $this->model = Task::query();
       }
 
-      public function getTasksOfUser($user): Collection
+      public function getTasksOfUser($user)
       {
           return $this->model
               ->whereUser($user)

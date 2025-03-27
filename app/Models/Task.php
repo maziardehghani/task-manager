@@ -20,6 +20,7 @@ class Task extends Model
         'end_date'
     ];
 
+    protected $perPage = 10;
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
