@@ -15,7 +15,7 @@ class TaskController extends Controller
     ){}
     public function index(): JsonResponse
     {
-        $tasks = $this->taskRepository->getTasksOfUser(User::first());
+        $tasks = $this->taskRepository->getTasksOfUser(auth()->user());
 
         return response()->success($tasks, 'tasks list received successfully');
     }

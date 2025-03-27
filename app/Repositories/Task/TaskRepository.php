@@ -14,7 +14,10 @@ class TaskRepository extends Repository {
 
       public function getTasksOfUser($user): Collection
       {
-          return $this->model->whereUser($user)->get();
+          return $this->model
+              ->whereUser($user)
+              ->latest()
+              ->paginate();
       }
 
 }
