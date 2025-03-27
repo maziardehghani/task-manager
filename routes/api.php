@@ -30,6 +30,8 @@ Route::prefix('auth')->group(function () {
 
 
 
-    Route::post('register', [AuthController::class, 'register']);
+    Route::post('register', [AuthController::class, 'register'])
+        ->middleware('throttle:5,1')
+        ->name('register');;
 
 });

@@ -20,7 +20,18 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        $user = $this->userRepository->store($request->validated());
 
+        $token = $user->createToken(
+            name: 'task-manager-api',
+            expiresAt: now()->addDay()
+        )->plainTextToken;
+
+
+        return response()->success([
+            'token' => $token,
+            'user' => $user,
+        ], 'User registered successfully');
     }
 
 
