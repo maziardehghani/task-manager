@@ -28,7 +28,7 @@ class TaskRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:2000'],
             'status' => ['required', 'string', Rule::in(Statuses::taskStatuses())],
-            'start_date' => ['required', 'date', 'after_or_equal:today'],
+            'start_date' => ['required', 'date', Rule::when($this->isMethod('POST'), 'after_or_equal:today')],
             'end_date' => ['nullable', 'date', 'after:start_date'],
         ];
     }
