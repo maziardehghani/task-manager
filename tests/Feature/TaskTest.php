@@ -72,6 +72,13 @@ class TaskTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+        $this->assertDatabaseHas('tasks', [
+            'title' => 'Task test',
+            'description' => 'Task test',
+            'status' => 'todo',
+            'start_date' => '2025/5/26',
+            'end_date' => null,
+        ]);
     }
 
 
@@ -94,6 +101,81 @@ class TaskTest extends TestCase
 
 
         $response->assertStatus(200);
+        $this->assertDatabaseHas('tasks', [
+            'title' => 'Task test',
+            'description' => 'Task test',
+            'status' => 'todo',
+            'start_date' => '2025/5/26',
+            'end_date' => null,
+        ]);    }
+
+    public function test_other_user_cant_update_a_task(): void
+    {
+        $user = User::factory()->create(['email' => 'user1@example.com']);
+        $otherUser = User::factory()->create(['email' => 'otheruser@example.com']);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $token = $otherUser->createToken('test-token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            "Accept" => "application/json",
+            "Authorization" => 'Bearer ' . $token
+        ])->postJson(route('tasks.update', $task->id),[
+            'title' => 'Task test',
+            'description' => 'Task test',
+            'status' => 'todo',
+            'start_date' => '2025/5/26',
+            'end_date' => null,
+            '_method' => 'PUT',
+        ]);
+
+
+        $response->assertStatus(403);
+        $this->assertDatabaseMissing('tasks', [
+            'title' => 'Task test',
+            'description' => 'Task test',
+            'status' => 'todo',
+            'start_date' => '2025/5/26',
+            'end_date' => null,
+        ]);
+    }
+
+    public function test_user_can_delete_a_task(): void
+    {
+        $user = User::factory()->create(['email' => 'user1@example.com']);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            "Accept" => "application/json",
+            "Authorization" => 'Bearer ' . $token
+        ])->delete(route('tasks.delete', $task->id));
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id,
+        ]);
+    }
+
+
+    public function test_user_cant_delete_other_task(): void
+    {
+        $user = User::factory()->create(['email' => 'user1@example.com']);
+        $otherUser = User::factory()->create(['email' => 'otheruser@example.com']);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $token = $otherUser->createToken('test-token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            "Accept" => "application/json",
+            "Authorization" => 'Bearer ' . $token
+        ])->delete(route('tasks.delete', $task->id));
+
+        $response->assertStatus(403);
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+        ]);
     }
 
 }
