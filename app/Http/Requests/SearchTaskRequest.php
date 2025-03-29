@@ -26,6 +26,7 @@ class SearchTaskRequest extends FormRequest
         return [
             'text' => 'nullable|string',
             'status' => ['nullable', 'string', Rule::in(Statuses::taskStatuses())],
+            'order' => ['nullable', 'string', Rule::in(['asc', 'desc'])],
         ];
     }
 }
