@@ -22,7 +22,7 @@ class TaskResources extends JsonResource
             'description' => $this->description,
             'status' => $this->status,
             'startDate' =>  CalendarService::formatter($this->start_date),
-            'endDate' => CalendarService::formatter($this->created_at),
+            'endDate' => CalendarService::formatter($this->end_date),
             'createdAt' => CalendarService::formatter($this->created_at),
         ];
     }
