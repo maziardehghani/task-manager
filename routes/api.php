@@ -38,5 +38,8 @@ Route::prefix('tasks')->group(function () {
         ->can('access-task', 'task')
         ->name('tasks.changeStatus');
 
-
+    Route::delete('/delete/{task}', [TaskController::class, 'delete'])
+        ->middleware(['auth:sanctum'])
+        ->can('access-task', 'task')
+        ->name('tasks.delete');
 });

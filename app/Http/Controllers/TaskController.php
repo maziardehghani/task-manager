@@ -52,4 +52,12 @@ class TaskController extends Controller
 
     }
 
+
+    public function delete(Task $task): JsonResponse
+    {
+        $this->taskRepository->delete($task);
+
+        return response()->success(new TaskResources($task), 'Task retrieved successfully');
+    }
+
 }

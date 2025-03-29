@@ -15,8 +15,8 @@ class TaskFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'title' => $this->faker->sentence(4),
-            'description' => $this->faker->sentence(5),
+            'title' => $this->faker->sentence(2),
+            'description' => $this->faker->sentence(2),
             'status' => $this->faker->randomElement(Statuses::taskStatuses()),
             'start_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'end_date' => null,
