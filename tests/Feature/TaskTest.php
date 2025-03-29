@@ -60,4 +60,40 @@ class TaskTest extends TestCase
 
     }
 
+
+    public function test_user_can_create_a_task(): void
+    {
+        $response = $this->postData(route('tasks.store'), [
+           'title' => 'Task test',
+           'description' => 'Task test',
+           'status' => 'todo',
+           'start_date' => '2025/5/26',
+            'end_date' => null,
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+
+    public function test_user_can_update_a_task(): void
+    {
+        $user = User::factory()->create(['email' => 'user1@example.com']);
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $token = $user->createToken('test-token')->plainTextToken;
+        $response = $this->withHeaders([
+            "Accept" => "application/json",
+            "Authorization" => 'Bearer ' . $token
+        ])->postJson(route('tasks.update', $task->id),[
+            'title' => 'Task test',
+            'description' => 'Task test',
+            'status' => 'todo',
+            'start_date' => '2025/5/26',
+            'end_date' => null,
+            '_method' => 'PUT',
+        ]);
+
+
+        $response->assertStatus(200);
+    }
+
 }
