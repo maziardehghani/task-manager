@@ -73,7 +73,7 @@ class Task extends Model
     private function filterByOrder($query, $order)
     {
         return $query->when($order, function ($query) use ($order) {
-            return $query->orderBy('created_at', $order);
+            return $query->orderBy('start_date', $order);
         });
     }
 

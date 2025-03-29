@@ -8,12 +8,13 @@ use Morilog\Jalali\Jalalian;
 
 class CalendarService
 {
-    static public function getPersianDate($date, $format = 'Y/m/d'): ?string
+    static public function formatter($date): ?string
     {
         if (!$date) {
             return null;
         }
-        return verta($date)->format($format);
+
+        return Carbon::make($date)->format('Y-m-d');
     }
 
 }

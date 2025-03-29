@@ -28,14 +28,14 @@ class TaskController extends Controller
     {
         $task = $this->taskRepository->store($request->validated());
 
-        return response()->success($task, 'Task created successfully');
+        return response()->success(new TaskResources($task), 'Task created successfully');
     }
 
     public function update(TaskRequest $request, Task $task): JsonResponse
     {
         $this->taskRepository->update($task, $request->validated());
 
-        return response()->success($task, 'Task updated successfully');
+        return response()->success(new TaskResources($task), 'Task updated successfully');
     }
 
 

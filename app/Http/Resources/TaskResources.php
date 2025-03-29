@@ -21,9 +21,9 @@ class TaskResources extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'status' => $this->status,
-            'startDate' =>  CalendarService::getPersianDate($this->start_date),
-            'endDate' => CalendarService::getPersianDate($this->created_at),
-            'createdAt' => CalendarService::getPersianDate($this->created_at),
+            'startDate' =>  CalendarService::formatter($this->start_date),
+            'endDate' => CalendarService::formatter($this->created_at),
+            'createdAt' => CalendarService::formatter($this->created_at),
         ];
     }
 }
